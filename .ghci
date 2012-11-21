@@ -1,0 +1,3 @@
+-- see http://neilmitchell.blogspot.com/2010/01/better-ghci-files.html
+
+:def test const $ return $ ":!cabal-dev install --enable-tests"
