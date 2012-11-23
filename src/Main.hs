@@ -2,25 +2,26 @@ module Main where
 
 import Hermes
 import System.Random  
+import Control.Monad.Random
 
-data DayOfWeek
-     = Monday
-     | Tuesday
-     | Wednesday
-     | Thursday
-     | Friday
-     | Saturday
-     | Sunday
+data Orientation 
+     = Backward
+     | Forward
+     | Vertical
+     | Horizontal
      deriving (Show, Read, Eq, Enum, Ord, Bounded)
 
-instance Random DayOfWeek where
-    random g = case randomR (fromEnum (minBound :: DayOfWeek), fromEnum (maxBound :: DayOfWeek)) g of
+instance Random Orientation where
+    random g = case randomR (fromEnum (minBound :: Orientation), fromEnum (maxBound :: Orientation)) g of
                  (r, g') -> (toEnum r, g')
     randomR (a,b) g = case randomR (fromEnum a, fromEnum b) g of
                         (r, g') -> (toEnum r, g')
 
+randomOrientation :: Rand StdGen Orientation
+randomOrientation = getRandom
+
 main :: IO ()
 main = do
-  gen <- newStdGen
-  let ns = randoms gen :: [DayOfWeek]
-  print $ take 10 ns
+  g <- getStdGen
+  let r = evalRand randomOrientation g
+  print r

@@ -49,8 +49,9 @@ executable hermes
 
   build-depends:
     hermes,
+    base >= 4 && < 6,
     random,
-    base >= 4 && < 6
+    MonadRandom
 
 test-suite tests
   type:             exitcode-stdio-1.0
